@@ -75,11 +75,11 @@ defmodule MonadMacro do
   {:ok, result} | {:error, reason}, depending entirely on the "right" function.
   """
   defp unit(left, result) do
-    quote do
-      case {unquote(result), unquote(left)} do
+    quote bind_quoted: [left: left, result: result] do
+      case {result, left} do
         {e = {:error, _}, _}  -> e
         {o = {:ok, _}, _}     -> o
-        {val, :monad}         -> {:ok, val}
+        {val, {:ok, _}}       -> {:ok, val}
         {val, _}              -> val
       end
     end

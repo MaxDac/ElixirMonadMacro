@@ -33,7 +33,13 @@ defmodule MonadMacroTest do
   test "Returns an error when a normal value is in input" do
     ls = [1, 2, 3]
     result = ls |> error_monad(:some_reason)
-    assert(result == {:error, :some_reason})
+    assert result == {:error, :some_reason}
+  end
+
+  test "Returns a monad when the function returns a normal value" do
+    ls = {:ok, [1, 2, 3]}
+    result = ls |> Enum.map(fn x -> x * 10 end)
+    assert result == {:ok, [10, 20, 30]}
   end
 
   test "Correctly reports the value, encapsulated only in one monad" do
