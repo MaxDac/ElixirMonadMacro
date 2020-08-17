@@ -1,7 +1,7 @@
-defmodule MonadMacroTest do
+defmodule OkErrorPipeTest do
   use ExUnit.Case
-  use MonadMacro
-  doctest MonadMacro
+  use OkErrorPipe
+  doctest OkErrorPipe
 
   def monad_map(ls) do
     result = Enum.map(ls, fn x -> x * 10 end)

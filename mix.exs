@@ -1,9 +1,9 @@
-defmodule MonadMacro.MixProject do
+defmodule OkErrorPipe.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :macro_tests,
+      app: :ok_error_pipe_macro,
       version: "0.1.0",
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,

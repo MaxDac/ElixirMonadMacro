@@ -1,4 +1,4 @@
-defmodule MonadMacro do
+defmodule OkErrorPipe do
   @moduledoc """
   This module implements a wrapper version of the pipe operator.
 
@@ -19,7 +19,7 @@ defmodule MonadMacro do
 
   defmacro __using__(_params) do
     quote do
-      import MonadMacro
+      import OkErrorPipe
       import Kernel, except: [|>: 2]
     end
   end
