@@ -14,28 +14,12 @@ defmodule OkErrorPipe do
   3. If the value is a normal value, the macro relies on the official implementation.
      In this case, it will not wrap the result value (normal behavior).
   """
-
-  import Kernel, except: [|>: 2]
-
+  
   defmacro __using__(_params) do
     quote do
       import OkErrorPipe
       import Kernel, except: [|>: 2]
     end
-  end
-
-  @doc """
-  The original implementation of the macro.
-  This macro relies on this implementation in every case, passing different codes in input.
-  """
-  defp original_implementation(left, right) do
-    [{h, _} | t] = Macro.unpipe({:|>, [], [left, right]})
-
-    fun = fn {x, pos}, acc ->
-      Macro.pipe(acc, x, pos)
-    end
-
-    :lists.foldl(fun, h, t)
   end
 
   @doc """
@@ -93,7 +77,7 @@ defmodule OkErrorPipe do
   """
   defmacro left |> right do
     extracted = extractor(left)
-    operation = original_implementation(extracted, right)
+    operation = quote do Kernel.|>(unquote(extracted), unquote(right)) end
     result = filter(left, operation)
     unit(left, result)
   end
